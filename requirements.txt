@@ -1,0 +1,3 @@
+python-telegram-bot==13.3
+instagrapi
+requests==2.31.0
