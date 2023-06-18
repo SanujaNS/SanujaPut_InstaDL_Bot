@@ -9,6 +9,7 @@ from instagrapi import Client
 import logging
 import requests
 import json
+from functools import wraps
 
 logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
@@ -18,8 +19,21 @@ logging.basicConfig(
 #Logger Setup
 logger = logging.getLogger(__name__)
 
-TOKEN = "__TOKEN__"
+LIST_OF_ADMINS = [id1, id2]    # List of user IDs of authorized users
+TOKEN = "__TOKEN__"              # Add bot token here
 
+def restricted(func):
+    @wraps(func)
+    def wrapped(update, context, *args, **kwargs):
+        user_id = update.effective_user.id
+        if user_id not in LIST_OF_ADMINS:
+            print("Unauthorized access denied for {}.".format(user_id))
+            context.bot.sendMessage(chat_id=update.message.chat_id, text="Unauthorized Access ⚠️ \nAccess DENIED 🚫 \n\n🔓 Contact Owner For Access :- \nhttps://t.me/SanujaNS")
+            return
+        return func(update, context, *args, **kwargs)
+    return wrapped
+
+@restricted
 def download(update: Update, context: CallbackContext):
     message = update.effective_message
     instagram_post = message.text
