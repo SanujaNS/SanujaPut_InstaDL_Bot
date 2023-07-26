@@ -1,5 +1,8 @@
+#!/usr/local/bin/python3
 # coding: utf-8
-# © @SanujaNS
+
+# SanujaPut_InstaDL_Bot - main.py
+# 07/26/2023 16:52
 # DONT_REMOVE_THIS
 
 
